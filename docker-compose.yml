@@ -1,0 +1,6 @@
+version: '3'
+services:
+  golang-react:
+    build: .
+    ports:
+      - 1323:1323
