@@ -7,15 +7,15 @@ RUN apk add --update \
 
 WORKDIR /app
 
-COPY /web/package.json /web/yarn.lock ./
+COPY /web/frontend/package.json /web/frontend/yarn.lock ./
 
 RUN yarn --pure-lockfile
 
-COPY /web .
+COPY /web/frontend .
 
 RUN yarn build
 
-# Step 1 - Run go build and get binary
+# Step 1 - Run go.rice to compile static/bundle assets & build go binary with said assets
 FROM golang:1.12-alpine
 
 RUN apk add --update \
@@ -24,7 +24,7 @@ RUN apk add --update \
 
 COPY . /go/src/github/esslamb/golang-react
 
-COPY --from=0 /app/build /go/src/github/esslamb/golang-react/web/build
+COPY --from=0 /app/build /go/src/github/esslamb/golang-react/web/frontend/build
 
 WORKDIR /go/src/github/esslamb/golang-react/cmd/golang-react
 

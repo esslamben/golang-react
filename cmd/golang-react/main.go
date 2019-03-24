@@ -10,7 +10,7 @@ import (
 func main() {
 	e := echo.New()
 
-	assetHandler := http.FileServer(rice.MustFindBox("../../web/build").HTTPBox())
+	assetHandler := http.FileServer(rice.MustFindBox("../../web/frontend/build").HTTPBox())
 
 	e.GET("/", echo.WrapHandler(assetHandler))
 	e.GET("/static/*", echo.WrapHandler(assetHandler))
